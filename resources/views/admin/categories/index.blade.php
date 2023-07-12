@@ -50,17 +50,26 @@
                                             <div class="flex px-2 py-1">
                                                 <div class="flex flex-col justify-center">
                                                     @if ($category->parent)
-                                                        <h6 class="mb-0 text-sm leading-normal">{{ $category->parent->name }}</h6>
+                                                        <x-button type="a" href="{{ route('admin.categories.edit', $category->parent_id) }}" color-type="info">
+                                                            <span class="mb-0 text-sm leading-normal">{{ $category->parent->name }}</span>
+                                                        </x-button>
                                                     @endif
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="p-2 align-middle bg-transparent border-b shadow-transparent">
                                             <div class="flex px-2 py-1">
-                                                <div class="flex flex-col justify-center">
-                                                    <x-primary-button type="button">
-                                                        check
-                                                    </x-primary-button>
+                                                <div class="flex flex-row justify-center">
+                                                    <x-button href="{{ route('admin.categories.edit', $category) }}" color-type="warning">
+                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                    </x-button>
+                                                    <form action="{{ route('admin.categories.destroy', $category) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <x-button type="button" action="submit" color-type="danger">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </x-button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
