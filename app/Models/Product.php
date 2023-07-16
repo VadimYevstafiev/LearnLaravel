@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\Product
@@ -66,4 +69,28 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    public function thumbnailUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function() {
+                if (!Storage::exists($this->attributes['thumbnail'])) {
+                    return $this->attributes['thumbnail'];
+                }
+                
+                // public/images/.....png
+                return Storage::url($this->attributes['thumbnail']);
+            }
+        );
+    }
+
+    //public function title(): Attribute
+    //{
+    //    return Attribute::make(
+    //        set: function(string $title) {
+    //            $this->attributes['slug'] = Str::of($title)->slug('-');
+    //            return $title;
+    //        }
+    //    );
+    //}
 }
