@@ -24,7 +24,7 @@
 
             <x-side-nav-link link="{{ route('admin.categories.index') }}" icon="fa-list" name="All Categories" />
 
-            <x-side-nav-link link="{{ route('admin.categories.create') }}" icon="fa-plus" name="Add Categories" />
+            <x-side-nav-link link="{{ route('admin.categories.create') }}" icon="fa-plus" name="Add Category" />
 
             <li class="w-full mt-4">
                 <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60"><i class="fa fa-gift" aria-hidden="true"></i> Products</h6>
@@ -32,7 +32,7 @@
 
             <x-side-nav-link link="{{ route('admin.products.index') }}" icon="fa-list" name="All Products" />
 
-            <x-side-nav-link link="{{ route('admin.products.create') }}" icon="fa-plus" name="Add Products" />
+            <x-side-nav-link link="{{ route('admin.products.create') }}" icon="fa-plus" name="Add Product" />
 
             <li class="w-full mt-4">
                 <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60">Account pages</h6>
