@@ -34,6 +34,7 @@ var white_sidenav_icons = ["bg-gray-200"];
 var sidenav_highlight = document.querySelector("a[href=" + CSS.escape(sidenav_target) + "]");
 
 // fixed plugin toggle
+if(fixedPluginButton) {
 if (pageName != "rtl") {
   fixedPluginButton.addEventListener("click", function () {
     fixedPluginCard.classList.toggle("-right-90");
@@ -80,6 +81,7 @@ if (pageName != "rtl") {
       }
     }
   });
+}
 }
 
 // color sidenav
@@ -158,107 +160,112 @@ function sidebarColor(a) {
 
 // sidenav style
 
-transparentBtn.addEventListener("click", function () {
-  const active_style_attr = document.createAttribute("active-style");
-  if (!this.hasAttribute(active_style_attr)) {
-    // change trigger buttons style
-
-    this.setAttributeNode(active_style_attr);
-
-    non_active_style.forEach((style_class) => {
-      this.classList.remove(style_class);
-    });
-
-    active_style.forEach((style_class) => {
-      this.classList.add(style_class);
-    });
-
-    whiteBtn.removeAttribute(active_style_attr);
-
-    active_style.forEach((style_class) => {
-      whiteBtn.classList.remove(style_class);
-    });
-
-    non_active_style.forEach((style_class) => {
-      whiteBtn.classList.add(style_class);
-    });
-
-    // change actual styles
-
-    white_sidenav_classes.forEach((style_class) => {
-      sidenav.classList.remove(style_class);
-    });
-    transparent_sidenav_classes.forEach((style_class) => {
-      sidenav.classList.add(style_class);
-    });
-
-    white_sidenav_highlighted.forEach((style_class) => {
-      sidenav_highlight.classList.remove(style_class);
-    });
-    transparent_sidenav_highlighted.forEach((style_class) => {
-      sidenav_highlight.classList.add(style_class);
-    });
-    for (var i = 0; i < sidenav_icons.length; i++) {
-      white_sidenav_icons.forEach((style_class) => {
-        sidenav_icons[i].classList.remove(style_class);
+if (transparentBtn) {
+  transparentBtn.addEventListener("click", function () {
+    const active_style_attr = document.createAttribute("active-style");
+    if (!this.hasAttribute(active_style_attr)) {
+      // change trigger buttons style
+  
+      this.setAttributeNode(active_style_attr);
+  
+      non_active_style.forEach((style_class) => {
+        this.classList.remove(style_class);
       });
-      transparent_sidenav_icons.forEach((style_class) => {
-        sidenav_icons[i].classList.add(style_class);
+  
+      active_style.forEach((style_class) => {
+        this.classList.add(style_class);
       });
+  
+      whiteBtn.removeAttribute(active_style_attr);
+  
+      active_style.forEach((style_class) => {
+        whiteBtn.classList.remove(style_class);
+      });
+  
+      non_active_style.forEach((style_class) => {
+        whiteBtn.classList.add(style_class);
+      });
+  
+      // change actual styles
+  
+      white_sidenav_classes.forEach((style_class) => {
+        sidenav.classList.remove(style_class);
+      });
+      transparent_sidenav_classes.forEach((style_class) => {
+        sidenav.classList.add(style_class);
+      });
+  
+      white_sidenav_highlighted.forEach((style_class) => {
+        sidenav_highlight.classList.remove(style_class);
+      });
+      transparent_sidenav_highlighted.forEach((style_class) => {
+        sidenav_highlight.classList.add(style_class);
+      });
+      for (var i = 0; i < sidenav_icons.length; i++) {
+        white_sidenav_icons.forEach((style_class) => {
+          sidenav_icons[i].classList.remove(style_class);
+        });
+        transparent_sidenav_icons.forEach((style_class) => {
+          sidenav_icons[i].classList.add(style_class);
+        });
+      }
     }
-  }
-});
+  });
+}
 
-whiteBtn.addEventListener("click", function () {
-  const active_style_attr = document.createAttribute("active-style");
-  if (!this.hasAttribute(active_style_attr)) {
-    this.setAttributeNode(active_style_attr);
-    non_active_style.forEach((style_class) => {
-      this.classList.remove(style_class);
-    });
-    active_style.forEach((style_class) => {
-      this.classList.add(style_class);
-    });
-
-    transparentBtn.removeAttribute(active_style_attr);
-    active_style.forEach((style_class) => {
-      transparentBtn.classList.remove(style_class);
-    });
-    non_active_style.forEach((style_class) => {
-      transparentBtn.classList.add(style_class);
-    });
-
-    // change actual styles
-
-    transparent_sidenav_classes.forEach((style_class) => {
-      sidenav.classList.remove(style_class);
-    });
-    white_sidenav_classes.forEach((style_class) => {
-      sidenav.classList.add(style_class);
-    });
-
-    transparent_sidenav_highlighted.forEach((style_class) => {
-      sidenav_highlight.classList.remove(style_class);
-    });
-
-    white_sidenav_highlighted.forEach((style_class) => {
-      sidenav_highlight.classList.add(style_class);
-    });
-
-    for (var i = 0; i < sidenav_icons.length; i++) {
-      transparent_sidenav_icons.forEach((style_class) => {
-        sidenav_icons[i].classList.remove(style_class);
+if (whiteBtn) {
+  whiteBtn.addEventListener("click", function () {
+    const active_style_attr = document.createAttribute("active-style");
+    if (!this.hasAttribute(active_style_attr)) {
+      this.setAttributeNode(active_style_attr);
+      non_active_style.forEach((style_class) => {
+        this.classList.remove(style_class);
       });
-      white_sidenav_icons.forEach((style_class) => {
-        sidenav_icons[i].classList.add(style_class);
+      active_style.forEach((style_class) => {
+        this.classList.add(style_class);
       });
+  
+      transparentBtn.removeAttribute(active_style_attr);
+      active_style.forEach((style_class) => {
+        transparentBtn.classList.remove(style_class);
+      });
+      non_active_style.forEach((style_class) => {
+        transparentBtn.classList.add(style_class);
+      });
+  
+      // change actual styles
+  
+      transparent_sidenav_classes.forEach((style_class) => {
+        sidenav.classList.remove(style_class);
+      });
+      white_sidenav_classes.forEach((style_class) => {
+        sidenav.classList.add(style_class);
+      });
+  
+      transparent_sidenav_highlighted.forEach((style_class) => {
+        sidenav_highlight.classList.remove(style_class);
+      });
+  
+      white_sidenav_highlighted.forEach((style_class) => {
+        sidenav_highlight.classList.add(style_class);
+      });
+  
+      for (var i = 0; i < sidenav_icons.length; i++) {
+        transparent_sidenav_icons.forEach((style_class) => {
+          sidenav_icons[i].classList.remove(style_class);
+        });
+        white_sidenav_icons.forEach((style_class) => {
+          sidenav_icons[i].classList.add(style_class);
+        });
+      }
     }
-  }
-});
+  });
+}
+
 
 // navbar fixed plugin
 
-if (navbar) {
+if (navbar && buttonNavbarFixed) {
   if (navbar.getAttribute("navbar-scroll") == "true") {
     buttonNavbarFixed.setAttribute("checked", "true");
   }
@@ -285,5 +292,5 @@ if (navbar) {
   });
 } else {
   // buttonNavbarFixed.setAttribute("checked", "true");
-  buttonNavbarFixed.setAttribute("disabled", "true");
+  buttonNavbarFixed?.setAttribute("disabled", "true");
 }
