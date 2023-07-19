@@ -1,6 +1,7 @@
 // chart 2
 
-var ctx2 = document.getElementById("chart-line").getContext("2d");
+var ctx2 = document?.getElementById("chart-line")?.getContext("2d");
+if (ctx2) {
 
 var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
 
@@ -101,5 +102,6 @@ new Chart(ctx2, {
     },
   },
 });
+}
 
 // end chart 2

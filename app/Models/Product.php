@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\FileStorageService;
+use Attribute as GlobalAttribute;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -84,13 +86,15 @@ class Product extends Model
         );
     }
 
-    //public function title(): Attribute
-    //{
-    //    return Attribute::make(
-    //        set: function(string $title) {
-    //            $this->attributes['slug'] = Str::of($title)->slug('-');
-    //            return $title;
-    //        }
-    //    );
-    //}
+    public function setThumbnailAttribute($image)
+    {
+        if (!empty($this->attributes['thumbnail'])) {
+            FileStorageService::remove($this->attributes['thumbnail']);
+        }
+
+        $this->attributes['thumbnail'] = FileStorageService::upload(
+            $image,
+            $this->attributes['slug']
+        );
+    }
 }
