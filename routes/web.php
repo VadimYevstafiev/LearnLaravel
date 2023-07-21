@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\RemoveImageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,10 @@ Route::name('admin.')->prefix('admin')->middleware(['role:admin|moderator'])->gr
     Route::get('dashboard', \App\Http\Controllers\Admin\DashboardController::class)->name('dashboard');
     Route::resource('products', \App\Http\Controllers\Admin\ProductsController::class)->except(['show']);
     Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class)->except(['show']);
+ });
+
+ Route::name('ajax.')->middleware('auth')->prefix('ajax')->group(function() {
+    Route::group(['role:admin|moderator'], function() {
+        Route::delete('images/{image}', RemoveImageController::class)->name('images.delete');
+    });
  });

@@ -38,7 +38,7 @@ class ProductsController extends Controller
     public function store(CreateProductRequest $request, ProductRepositoryContract $repository)
     {
         return $repository->create($request)
-            ? redirect()-route('admin.products.index')
+            ? redirect()->route('admin.products.index')
             : redirect()->back()->withInput();
     }
 
@@ -66,7 +66,7 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
         $product->categories()->detach();
         $product->delete();
