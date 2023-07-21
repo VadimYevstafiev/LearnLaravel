@@ -16,7 +16,7 @@
                                       enctype="multipart/form-data"
                                       method="POST">
                                     @csrf
-                                   <!-- @method('PUT') -->
+                                    @method('PUT')
 
                                     @if (!empty($categories))
                                         <div class="mb-4">
