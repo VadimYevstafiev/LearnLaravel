@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\FileStorageService;
-use Attribute as GlobalAttribute;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -96,5 +95,24 @@ class Product extends Model
             $image,
             $this->attributes['slug']
         );
+    }
+
+    public function price(): Attribute
+    {
+        return Attribute::get(fn() => round($this->attributes['price'], 2));
+    }
+
+    public function endPrice(): Attribute
+    {
+        return Attribute::get(function() {
+            $price = $this->attributes['price'];
+            $discount = $this->attributes['discount'] ?? 0;
+
+            $endPrice =  $discount === 0
+                ? $price
+                : ($price - ($price * $discount / 100));
+
+            return $endPrice <= 0 ? 1 : round($endPrice, 2);
+        });
     }
 }
