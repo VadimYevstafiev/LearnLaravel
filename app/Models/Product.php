@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\FileStorageService;
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,7 +47,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Product extends Model
+class Product extends Model implements Buyable
 {
     use HasFactory;
 
@@ -114,5 +115,25 @@ class Product extends Model
 
             return $endPrice <= 0 ? 1 : round($endPrice, 2);
         });
+    }
+
+    public function getBuyableIdentifier($options = null)
+    {
+        return $this->id;
+    }
+
+    public function getBuyableDescription($options = null)
+    {
+        return $this->title;
+    }
+
+    public function getBuyablePrice($options = null)
+    {
+        return $this->endPrice;
+    }
+
+    public function getBuyableWeight($options = null)
+    {
+        return 0;
     }
 }
