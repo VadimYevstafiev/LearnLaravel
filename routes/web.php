@@ -62,5 +62,6 @@ Route::name('admin.')->prefix('admin')->middleware(['role:admin|moderator'])->gr
     // /cart/product_id
     Route::post('{product}', [CartController::class, 'add'])->name('add');
     Route::delete('/', [CartController::class, 'remove'])->name('remove');
+    // /cart/product_id/count
     Route::post('{product}/count', [CartController::class, 'countUpdate'])->name('count.update');
  });
