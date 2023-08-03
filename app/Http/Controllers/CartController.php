@@ -45,6 +45,9 @@ class CartController extends Controller
                 $rowId = $item->rowId;
             }
         }
+
+       // Cart::instance('cart')-
+
         if(!is_null($rowId))
         Cart::instance('cart')->update(
             $rowId,
