@@ -9,10 +9,8 @@ use Illuminate\Http\Request;
 
 class PaypalController extends Controller
 {
-    //public function create (CreateOrderRequest $request)
     public function create (CreateOrderRequest $request, PaypalServiceContract $paypal)
     {
-        //dd($request->validated());
         return app()->call([$paypal, 'create'], compact('request'));
     }
 
