@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('checkout', CheckoutController::class)->name('checkout');
-    Route::get('orders/{orderId}/thank-you', ThankYouPageController::class)->name('payment.thankyou');
+    Route::get('orders/{order}/paypal/thank-you', [ThankYouPageController::class, 'paypal'])->name('payment.thankyou');
 });
 
 require __DIR__.'/auth.php';

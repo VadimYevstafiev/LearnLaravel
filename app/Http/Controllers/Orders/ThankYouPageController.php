@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Orders;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Order;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ThankYouPageController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function paypal(Order $order)
     {
-        //
+        $order->loadMissing(['user', 'transaction', 'products']);
+
+        Cart::instance('cart')->destroy();
+        
+        return view('thankyou/summary', compact('order'));
     }
 }
