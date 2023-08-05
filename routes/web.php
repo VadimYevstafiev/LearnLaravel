@@ -41,11 +41,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('checkout', CheckoutController::class)->name('checkout');
     Route::get('orders/{orderId}/thank-you', ThankYouPageController::class)->name('payment.thankyou');
-
-    Route::prefix('paypal')->name('paypal.')->group(function() {
-        Route::post('order/create', [PaypalController::class, 'create'])->name('orders.create');
-        Route::post('order/{orderId}/capture', [PaypalController::class, 'capture'])->name('orders.capture');
-    });
 });
 
 require __DIR__.'/auth.php';

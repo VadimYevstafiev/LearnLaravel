@@ -14,8 +14,8 @@ class PaypalController extends Controller
         return app()->call([$paypal, 'create'], compact('request'));
     }
 
-    public function capture ()
+    public function capture (string $vendorOrderId, PaypalServiceContract $paypal)
     {
-        
+        return app()->call([$paypal, 'capture'], compact('vendorOrderId'));
     }
 }
