@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />        	
         <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/iziToast.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.scss', 'resources/js/app.js'])
@@ -112,5 +113,7 @@
                 </div>
             </div>
         </footer>
+        <script src="{{ asset('js/iziToast.js') }}"></script>
+        @include('vendor.lara-izitoast.toast')
     </body>
 </html>
