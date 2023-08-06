@@ -3,9 +3,17 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 trait AdminTestsFunctions
 {
+    use RefreshDatabase;
+
+    protected function afterRefreshingDatabase()
+    {
+        $this->seed();
+    }
+
     protected function setUp(): void
     {
         // first include all the normal setUp operations
