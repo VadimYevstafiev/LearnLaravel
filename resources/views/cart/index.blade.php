@@ -14,28 +14,31 @@
                                 <p class="text-sm">${{ $product->price }}</p>
                             </div>
                             <div class="mt-4 flex flex-col items-end justify-end sm:space-y-6 sm:mt-0 sm:space-x-6">
-                                <form action="{{ route('cart.count.update', $product->model) }}" class="flex items-center border-gray-100"
+                                <!-- <form action="{{ route('cart.count.update', $product->model) }}" class="flex items-center border-gray-100" -->
+                                <form action="{{ route('cart.count.update', $product->id) }}" class="flex items-center border-gray-100"
                                     method="post">
                                     @csrf
-                                    <!-- <button data-action="decrementCart" -->
+                                    <input type="hidden" value="{{$product->rowId}}" name="rowId">
                                     <button data-action="decrement"
+                                        data-type="submit"
                                         class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
                                     > - </button>
                                     <input class="product-count h-8 w-8 border bg-white text-center text-xs outline-none" 
                                            type="number"
-                                           name="quantity"
+                                           name="product_count"
                                            value="{{ $product->qty }}"
                                            min="1"
                                            max="{{$product->model->quantity}}"
                                     />
-                                    <!-- <button data-action="incrementCart" -->
                                     <button data-action="increment"
+                                    data-type="submit"
                                         class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
                                     > + </button>
-                                    <button type="submit"
+                                    <!-- <button type="submit"
+                                            data-type="submit"
                                             class="ml-5 h-10 ml-auto w-full text-center text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                                         Change
-                                    </button>
+                                    </button> -->
                                 </form>
                                 <div class="flex items-center space-x-4">
                                     <p class="text-sm"><b>Total: </b>${{ $product->subtotal }}</p>
