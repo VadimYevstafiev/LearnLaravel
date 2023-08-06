@@ -39,20 +39,14 @@ class CartController extends Controller
      */
     public function countUpdate(Request $request, Product $product)
     {   
-        $rowId = null;
-        foreach (Cart::instance('cart')->content() as $item) {
-            if ($item->id === $product->id) {
-                $rowId = $item->rowId;
-            }
+        $count = $request->get('product_count', 1);
+        $rowId = $request->get('rowId');
+
+        if (!$rowId || $product->quantity < $count) {
+            return redirect()->back();
         }
 
-       // Cart::instance('cart')-
-
-        if(!is_null($rowId))
-        Cart::instance('cart')->update(
-            $rowId,
-            $request->get('quantity')
-        );
+        Cart::instance('cart')->update($rowId, $count);
 
         return redirect()->back();
     }
