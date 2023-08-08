@@ -27,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 //});
 Route::get('/', HomeController::class)->name('home');
 
+Route::get('invoice',function() {
+    $order = \App\Models\Order::all()->last();
+    $invoiceService = app()->make(\App\Services\Contracts\InvoicesServiceContract::class);
+
+    dd($invoiceService->generate($order)->url());
+});
+
 Route::resource('categories', CategoriesController::class)->only(['index', 'show']);
 Route::resource('products', ProductsController::class)->only(['index', 'show']);
 
