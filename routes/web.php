@@ -29,9 +29,10 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::get('invoice',function() {
     $order = \App\Models\Order::all()->last();
-    $invoiceService = app()->make(\App\Services\Contracts\InvoicesServiceContract::class);
+    // $invoiceService = app()->make(\App\Services\Contracts\InvoicesServiceContract::class);
 
-    dd($invoiceService->generate($order)->url());
+    // dd($invoiceService->generate($order)->url());
+    \App\Events\OrderCreated::dispatch($order);
 });
 
 Route::resource('categories', CategoriesController::class)->only(['index', 'show']);
