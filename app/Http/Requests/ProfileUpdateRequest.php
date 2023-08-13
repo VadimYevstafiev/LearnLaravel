@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Rules\Phone;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -15,9 +16,15 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd($this->route);
+
         return [
-            'name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'name' => ['required', 'string', 'max:35'],
+            'surname' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'phone' => ['required', 'string', 'max:15', 'unique:' . User::class, new Phone],
+            'birthdate' => ['required', 'date', 'before_or_equal:-18 years'],
+            'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
 }
