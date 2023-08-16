@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Notifications\Orders\Created;
+namespace App\Notifications\Orders\Updated;
 
 use App\Notifications\Orders\AdminNotification as BaseNotification;
-use App\Enums\OrderStatus;
 use App\Services\InvoicesService;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Storage;
 use NotificationChannels\Telegram\TelegramMessage;
 
 class AdminNotification extends BaseNotification
@@ -21,16 +19,7 @@ class AdminNotification extends BaseNotification
 
         return (new MailMessage)
             ->greeting("Hello, $notifiable->name $notifiable->surname")
-            ->line("Order {$this->order->id} was created by {$this->order->name} {$this->order->surname}")
-            ->lineIf(
-                $this->order->status->getName() === OrderStatus::Paid->value,
-                'And succesfully paid!'
-             )
-            ->line("You can see the invoice file in attachments")
-            ->attach(Storage::disk('public')->path($invoice->filename), [
-                'as' => $invoice->filename,
-                'mime' => 'application/pdf'
-            ]);
+            ->line("Status of order {$this->order->id} has been changed to {$this->order->status->getName()}");
     }
 
     /**
@@ -41,7 +30,6 @@ class AdminNotification extends BaseNotification
         return TelegramMessage::create()
             ->to($notifiable->user->telegram_id)
             ->content("Hello, $notifiable->name $notifiable->surname")
-            ->line("Order {$this->order->id} was created by {$this->order->name} {$this->order->surname}")
-            ->line('You can see the invoice file in attachments');
+            ->line("Status of order {$this->order->id} has been changed to {$this->order->status->getName()}");
     }
 }

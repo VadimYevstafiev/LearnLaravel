@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Notifications\Orders\Created;
+namespace App\Notifications\Orders\Updated;
 
 use App\Notifications\Orders\CustomerNotification as BaseNotification;
-use App\Enums\OrderStatus;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Storage;
 use NotificationChannels\Telegram\TelegramMessage;
 
 class CustomerNotification extends BaseNotification
@@ -21,17 +19,7 @@ class CustomerNotification extends BaseNotification
 
                 return (new MailMessage)
                     ->greeting("Hello, $notifiable->name $notifiable->surname")
-                    ->line('Your order was created!')
-                    ->lineIf(
-                        $notifiable->status->getName() === OrderStatus::Paid->value,
-                        'And succesfully paid!'
-                    )
-                    ->line("You can see the invoice file in attachments")
-                    ->attach(Storage::disk('public')->path($invoice->filename), [
-                        'as' => $invoice->filename,
-                        'mime' => 'application/pdf'
-                    ]);
-                    // ->action('Notification Action', url('/'))
+                    ->line("Your order status has been changed to {$notifiable->status->getName()}");
     }
 
     /**
@@ -42,7 +30,6 @@ class CustomerNotification extends BaseNotification
         return TelegramMessage::create()
             ->to($notifiable->user->telegram_id)
             ->content("Hello, $notifiable->name $notifiable->surname")
-            ->line('Your order was created!')
-            ->line('You can see the invoice file in attachments');
+            ->line("Your order status has been changed to {$notifiable->status->getName()}");
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
+use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Ajax\RemoveImageController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Ajax\Payments\PaypalController;
+use App\Http\Controllers\Callbacks\TelegramController;
 use App\Http\Controllers\Orders\ThankYouPageController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,11 @@ Route::get('invoice',function() {
 
     // dd($invoiceService->generate($order)->url());
     \App\Events\OrderCreated::dispatch($order);
+});
+
+Route::name('callbacks.')->prefix('callback')
+->middleware(['role:admin|moderator|customer'])->group(function() {
+    Route::get('telegram', TelegramController::class)->name('telegram');
 });
 
 Route::resource('categories', CategoriesController::class)->only(['index', 'show']);
