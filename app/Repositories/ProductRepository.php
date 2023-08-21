@@ -6,6 +6,7 @@ use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Repositories\Contracts\ImageRepositoryContract;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -55,6 +56,15 @@ class ProductRepository implements Contracts\ProductRepositoryContract
             logs()->warning($exception);
             return false;
         }
+    }
+
+    public function get(Product $product, Request $request): Product
+    {
+        if ($request->has('color')) {
+            $product = $product->withColor($request->get('color'))->first();
+        }
+
+        return $product;
     }
 
     protected function formatRequestData(CreateProductRequest|UpdateProductRequest $request): array
