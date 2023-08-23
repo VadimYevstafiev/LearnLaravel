@@ -6,6 +6,9 @@ use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Repositories\Contracts\ImageRepositoryContract;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -55,6 +58,30 @@ class ProductRepository implements Contracts\ProductRepositoryContract
             logs()->warning($exception);
             return false;
         }
+    }
+
+    public function get(Product $product, Request $request): Product
+    {
+        if ($request->has('color')) {
+            $product = $product->withProductColor($request->get('color'))->first();
+        }
+
+        return $product;
+    }
+
+    public function paginate(int $perPage, Request $request): LengthAwarePaginator
+    {
+        $products = Product::orderByDesc('id')->available();
+
+        if ($request->has('color')) {
+            $products = $products->withColor($request->get('color'));
+        }
+
+        $products->when($request->get('brands'), function (Builder $query, array $brands) {
+            $query->whereIn('brand_id', $brands);
+        });
+
+        return $products->paginate($perPage);
     }
 
     protected function formatRequestData(CreateProductRequest|UpdateProductRequest $request): array
