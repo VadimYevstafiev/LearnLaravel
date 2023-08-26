@@ -58,6 +58,7 @@ class Product extends Model implements Buyable
 
     protected $fillable = [
         'slug',
+        'user_id',
         'title',
         'description',
         'SKU',
@@ -104,6 +105,11 @@ class Product extends Model implements Buyable
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function thumbnailUrl(): Attribute
