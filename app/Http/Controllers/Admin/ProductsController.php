@@ -45,6 +45,7 @@ class ProductsController extends Controller
      */
     public function store(CreateProductRequest $request, ProductRepositoryContract $repository)
     {
+        \App\Events\UserNotify::dispatch([auth()->id(), 'New product ' . $request->title . ' was added.']);
         return $repository->create($request)
             ? redirect()->route('admin.products.index')
             : redirect()->back()->withInput();
@@ -78,6 +79,7 @@ class ProductsController extends Controller
     {
         $product->categories()->detach();
         $product->delete();
+        \App\Events\UserNotify::dispatch([auth()->id(), 'Product ' . $product->title . ' was destroid.']);
 
         return redirect()->route('admin.products.index');
     }

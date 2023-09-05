@@ -38,6 +38,7 @@ class CategoriesController extends Controller
         $fields = $request->validated();
         $fields['slug'] = Str::of($fields['name'])->slug('-');
         Category::create($fields);
+        \App\Events\UserNotify::dispatch([auth()->id(), 'New category ' . $fields['name'] . ' was added.']);
 
         return redirect()->route('admin.categories.index');
     }
@@ -74,6 +75,7 @@ class CategoriesController extends Controller
         }
 
         $category->deleteOrFail();
+        \App\Events\UserNotify::dispatch([auth()->id(), 'Product ' . $category->name . ' was destroid.']);
 
         return redirect()->route('admin.categories.index');
     }

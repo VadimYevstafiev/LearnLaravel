@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UserNotify;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Ajax\RemoveImageController;
 use App\Http\Controllers\CartController;
@@ -40,6 +41,10 @@ Route::post("locale", function(Request $request) {
 
     return redirect()->route('home');
 })->name('locale');
+
+// Route::get('notification', function() {
+//     UserNotify::dispatch([auth()->id(), 'some other message']);
+// });
 
 Route::get('invoice',function() {
     $order = \App\Models\Order::all()->last();
