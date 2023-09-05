@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UserNotify;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Ajax\RemoveImageController;
 use App\Http\Controllers\CartController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Ajax\Payments\PaypalController;
 use App\Http\Controllers\Callbacks\TelegramController;
 use App\Http\Controllers\Orders\ThankYouPageController;
 use App\Http\Controllers\ProductsController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +29,22 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 Route::get('/', HomeController::class)->name('home');
+
+Route::post("locale", function(Request $request) {
+    if(!$request->has('locale') || !in_array($request->get('locale'), config('app.locales'))) {
+        abort(404);
+    }
+
+    logs()->info('request => ' . app()->currentLocale() . ' => ' . $request->get('locale'));
+    session()->put('locale', $request->get('locale'));
+    session()->save();
+
+    return redirect()->route('home');
+})->name('locale');
+
+// Route::get('notification', function() {
+//     UserNotify::dispatch([auth()->id(), 'some other message']);
+// });
 
 Route::get('invoice',function() {
     $order = \App\Models\Order::all()->last();

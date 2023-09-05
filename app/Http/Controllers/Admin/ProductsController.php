@@ -12,12 +12,20 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::with('categories')->orderByDesc('id')->paginate(5);
+        $products = Product::with('categories')
+            // ->where('user_id', '=', null)
+            // ->orWhere('user_id', '=', auth()->id())
+            ->orderByDesc('id')->paginate(5);
 
         return view('admin/products/index', compact('products'));
     }
@@ -37,6 +45,7 @@ class ProductsController extends Controller
      */
     public function store(CreateProductRequest $request, ProductRepositoryContract $repository)
     {
+        \App\Events\UserNotify::dispatch([auth()->id(), 'New product ' . $request->title . ' was added.']);
         return $repository->create($request)
             ? redirect()->route('admin.products.index')
             : redirect()->back()->withInput();
@@ -70,6 +79,7 @@ class ProductsController extends Controller
     {
         $product->categories()->detach();
         $product->delete();
+        \App\Events\UserNotify::dispatch([auth()->id(), 'Product ' . $product->title . ' was destroid.']);
 
         return redirect()->route('admin.products.index');
     }
